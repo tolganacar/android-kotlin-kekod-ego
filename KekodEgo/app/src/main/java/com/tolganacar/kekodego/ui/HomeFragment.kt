@@ -41,29 +41,7 @@ class HomeFragment : Fragment() {
         setupSwitchListeners()
         setupBottomNavBarListener()
 
-        // Switch durumlarını geri yükle
-        savedInstanceState?.let {
-            restoreSwitchStates(it)
-        }
-
         return binding.root
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        // Switch durumlarını kaydet
-        switchItemMappings.forEach { item ->
-            outState.putBoolean(item.title, item.switch.isChecked)
-        }
-        outState.putBoolean("switchEgo", binding.switchEgo.isChecked)
-    }
-
-    private fun restoreSwitchStates(savedInstanceState: Bundle) {
-        switchItemMappings.forEach { item ->
-            item.switch.isChecked = savedInstanceState.getBoolean(item.title, false)
-        }
-        binding.switchEgo.isChecked = savedInstanceState.getBoolean("switchEgo", false)
     }
 
     private fun setupSwitchListeners() {
@@ -127,7 +105,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupBottomNavBarListener() {
-        bottomNavigationView.setOnItemSelectedListener { menuItem ->
+        bottomNavigationView.setOnItemSelectedListener  { menuItem ->
             navController.navigate(menuItem.itemId)
             true
         }
