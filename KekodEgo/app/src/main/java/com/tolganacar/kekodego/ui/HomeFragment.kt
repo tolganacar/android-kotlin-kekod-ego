@@ -8,18 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.tolganacar.kekodego.MainActivity
 import com.tolganacar.kekodego.R
 import com.tolganacar.kekodego.data.SwitchItem
 import com.tolganacar.kekodego.databinding.FragmentHomeBinding
+import com.tolganacar.kekodego.utils.navigateSafe
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var navController: NavController
+    private var rootView: View? = null
 
     private val switchItemMappings by lazy {
         listOf(
@@ -37,11 +38,19 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+        if(rootView == null) {
+            rootView = binding.root
+        }
+
+        return rootView
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         initializeBottomNavBar()
         setupSwitchListeners()
         setupBottomNavBarListener()
-
-        return binding.root
     }
 
     private fun setupSwitchListeners() {
@@ -61,6 +70,7 @@ class HomeFragment : Fragment() {
                     } else {
                         if (bottomNavigationView.menu.size() >= 5) {
                             showToastForExtraItem(item)
+                            item.switch.isChecked = false
                         } else if (bottomNavigationView.menu.size() < 5) {
                             addBottomNavItem(item.fragmentId, item.title, item.iconRes)
                         } else {
@@ -90,7 +100,7 @@ class HomeFragment : Fragment() {
 
     private fun initializeBottomNavBar() {
         bottomNavigationView = (activity as MainActivity).bottomNavView()
-        navController = NavHostFragment.findNavController(this)
+        navController = (activity as MainActivity).navController()
         addBottomNavItem(R.id.homeFragment, "Home", R.drawable.ic_home)
     }
 
@@ -105,8 +115,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupBottomNavBarListener() {
-        bottomNavigationView.setOnItemSelectedListener  { menuItem ->
-            navController.navigate(menuItem.itemId)
+        bottomNavigationView.setOnItemSelectedListener { menuItem ->
+            navController.navigateSafe(menuItem.itemId)
             true
         }
     }
