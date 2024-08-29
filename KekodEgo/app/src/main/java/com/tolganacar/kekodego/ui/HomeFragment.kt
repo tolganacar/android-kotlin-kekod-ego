@@ -1,5 +1,6 @@
 package com.tolganacar.kekodego.ui
 
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ class HomeFragment : Fragment() {
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var navController: NavController
     private var rootView: View? = null
+    private lateinit var animationDrawable: AnimationDrawable
 
     private val switchItemMappings by lazy {
         listOf(
@@ -48,9 +50,17 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setBackgroundAnimation()
         initializeBottomNavBar()
         setupSwitchListeners()
         setupBottomNavBarListener()
+    }
+
+    private fun setBackgroundAnimation() {
+        animationDrawable = binding.mainLayout.background as AnimationDrawable
+        animationDrawable.setEnterFadeDuration(2500)
+        animationDrawable.setEnterFadeDuration(5000)
+        animationDrawable.start()
     }
 
     private fun setupSwitchListeners() {
