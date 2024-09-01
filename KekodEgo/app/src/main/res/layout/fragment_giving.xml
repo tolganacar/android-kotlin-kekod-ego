@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#AA00FF"
-    tools:context=".ui.GivingFragment" >
+    tools:context=".ui.view.GivingFragment" >
 
     <TextView
         android:id="@+id/textViewHappinessFragment"
