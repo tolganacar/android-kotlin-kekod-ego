@@ -1,4 +1,4 @@
-package com.tolganacar.kekodego.ui
+package com.tolganacar.kekodego.ui.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

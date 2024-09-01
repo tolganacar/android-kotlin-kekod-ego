@@ -1,4 +1,4 @@
-package com.tolganacar.kekodego
+package com.tolganacar.kekodego.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 

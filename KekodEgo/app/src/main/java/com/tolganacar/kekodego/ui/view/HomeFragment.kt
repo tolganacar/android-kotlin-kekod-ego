@@ -1,4 +1,4 @@
-package com.tolganacar.kekodego.ui
+package com.tolganacar.kekodego.ui.view
 
 import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.tolganacar.kekodego.HomeViewModel
+import com.tolganacar.kekodego.ui.viewmodel.HomeViewModel
 import com.tolganacar.kekodego.MainActivity
 import com.tolganacar.kekodego.R
 import com.tolganacar.kekodego.data.SwitchItem
