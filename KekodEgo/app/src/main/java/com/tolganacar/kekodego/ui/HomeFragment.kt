@@ -8,9 +8,11 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.tolganacar.kekodego.HomeViewModel
 import com.tolganacar.kekodego.MainActivity
 import com.tolganacar.kekodego.R
 import com.tolganacar.kekodego.data.SwitchItem
@@ -23,6 +25,8 @@ class HomeFragment : Fragment() {
     private lateinit var navController: NavController
     private var rootView: View? = null
     private lateinit var animationDrawable: AnimationDrawable
+
+    private val homeViewModel: HomeViewModel by viewModels()
 
     private val switchItemMappings by lazy {
         listOf(
@@ -54,6 +58,9 @@ class HomeFragment : Fragment() {
         initializeBottomNavBar()
         setupSwitchListeners()
         setupBottomNavBarListener()
+
+        binding.switchEgo.isChecked = homeViewModel.isEgoChecked
+
     }
 
     private fun setBackgroundAnimation() {
@@ -65,6 +72,7 @@ class HomeFragment : Fragment() {
 
     private fun setupSwitchListeners() {
         binding.switchEgo.setOnCheckedChangeListener { _, isChecked ->
+            homeViewModel.isEgoChecked = isChecked  // ViewModel'e durumu kaydet
             if (isChecked) {
                 disableOtherViews()
             } else {
@@ -132,6 +140,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun showToastForExtraItem(item: SwitchItem) {
-        Snackbar.make(binding.root, "${item.title} cannot be added to the BottomNavigationView.", Toast.LENGTH_SHORT).show()
+        rootView?.let {
+            Snackbar.make(it, "${item.title} cannot be added to the BottomNavigationView.", Snackbar.LENGTH_SHORT).show()
+        } ?: run {
+            Toast.makeText(context, "${item.title} cannot be added to the BottomNavigationView.", Toast.LENGTH_SHORT).show()
+        }
     }
 }
